@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import data from "./data.json";
+import data from "./utills/data.json";
 import Products from "./components/Products";
 import Select from "./components/Select";
 import Search from "./components/Search";
 import List from "./components/List";
+import Actions from "./components/Actions";
+import { Card } from "react-bootstrap";
+import "./components/styles.css";
 
 const App = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(JSON.parse(JSON.stringify(data)));
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [keyword, setKeyword] = useState("");
-  useEffect(() => {
-    setProducts(data);
-  }, []);
 
-  const handleSelected = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  const handleKeyword = (event) => {
-    setKeyword(event.target.value);
-  };
+  const handleSelected = (event) => setSelectedCategory(event.target.value);
+  const handleKeyword = (event) => setKeyword(event.target.value);
 
   const buyItem = (id) => {
     let newData = products;
@@ -41,45 +36,50 @@ const App = () => {
   };
 
   const handleReset = () => {
-    setProducts(data);
+    setProducts(JSON.parse(JSON.stringify(data)));
     setSelectedCategory("All");
     setKeyword("");
   };
 
   const handleDone = () => {
-    let newData = products;
     console.log(
       "You have bought this items:",
-      newData.map((obj) => {
-        if (obj.amount > 0) return obj.name;
-        else {
-          return null;
-        }
-      })
+      products
+        .filter((p) => p.amount !== 0)
+        .map((a) => `${a.name} X ${a.amount}`)
+        .join(" ")
     );
-    // alert("We hope you enjoy shopping in our site");
   };
 
+  const getPurchasedProductsAmount = () =>
+    products.reduce((a, b) => a + (b["amount"] || 0), 0);
+
   return (
-    <div className="App">
-      <header>
-        <a href="/">Shopping list</a>
-      </header>
+    <Card style={{ position: "relative" }}>
+      <Card.Header as="h1">Shopping List </Card.Header>
       <main>
-        <Select handleSelected={handleSelected} />
-        <Search handleKeyword={handleKeyword} />
+        <div className="top-actions">
+          <Select className="select-action" handleSelected={handleSelected} />
+          <Search handleKeyword={handleKeyword} />
+        </div>
+        <br></br>
         <Products
           keyword={keyword}
           products={products}
           selectedCategory={selectedCategory}
           buyItem={buyItem}
         ></Products>
-        <List products={products} deleteItem={deleteItem} />
-        <button onClick={handleReset}>Start Over</button>
-        <button onClick={handleDone}>Done</button>
+        <div className="bottom-section">
+          <List products={products} deleteItem={deleteItem} />
+          <hr id="divider"></hr>
+          <Actions
+            handleReset={handleReset}
+            handleDone={handleDone}
+            getPurchasedProductsAmount={getPurchasedProductsAmount}
+          />
+        </div>
       </main>
-      <footer>All rights is reserved to Amir Aizin</footer>
-    </div>
+    </Card>
   );
 };
 
