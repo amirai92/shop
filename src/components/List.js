@@ -3,7 +3,7 @@ import React from "react";
 import "./styles.css";
 
 const List = ({ products, deleteItem }) => {
-  const getFilteredProducts = () => products.filter((p) => p.amount !== 0);
+  const getFilteredProducts = () => products.filter((p) => p?.amount !== 0);
 
   return (
     <>
@@ -13,11 +13,11 @@ const List = ({ products, deleteItem }) => {
       {getFilteredProducts().length !== 0 ? (
         getFilteredProducts().map((p) => (
           <Button
-            key={p._id}
+            key={p?._id}
             variant={"warning"}
             style={{ margin: "25px" }}
-            onClick={() => deleteItem(p._id)}
-          >{`x${p.amount} ${p.name}`}</Button>
+            onClick={() => deleteItem(p?._id)}
+          >{`x${p?.amount} ${p?.name}`}</Button>
         ))
       ) : (
         <h5> Your cart is empty</h5>

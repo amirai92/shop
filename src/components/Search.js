@@ -1,15 +1,18 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import "./styles.css";
-const Search = ({ handleKeyword }) => {
+const Search = ({ handleKeyword, keyword }) => {
   return (
     <>
-      <Form.Control
-        type="search"
-        placeholder="Search..."
-        onChange={handleKeyword}
-      />
-      <Form.Text className="text-muted"></Form.Text>
+      <p>
+        <Form.Control
+          type="search"
+          placeholder="Search..."
+          onChange={handleKeyword}
+          value={keyword}
+        />
+        <Form.Text className="text-muted"></Form.Text>
+      </p>
     </>
   );
 };

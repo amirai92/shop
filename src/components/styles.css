@@ -1,13 +1,16 @@
 main {
   margin-top: 2rem;
 }
+
 h5 {
   margin-left: 24px;
   text-align: center;
 }
 p {
   text-align: center;
-  /* font-weight: bold; */
+}
+.row {
+  display: flex !important;
 }
 .top-actions {
   display: flex;
@@ -45,22 +48,4 @@ p {
 
 #divider {
   width: 90%;
-}
-
-@media screen and (max-width: 1024px) {
-  .make-it-grid2 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .make-it-grid2 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .make-it-grid2 {
-    grid-template-columns: repeat(1, 1fr) !important;
-  }
 }

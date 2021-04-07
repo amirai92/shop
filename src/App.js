@@ -43,10 +43,10 @@ const App = () => {
 
   const handleDone = () => {
     console.log(
-      "You have bought this items:",
+      "You have bought this items : ",
       products
-        .filter((p) => p.amount !== 0)
-        .map((a) => `${a.name} X ${a.amount}`)
+        .filter((p) => p?.amount !== 0)
+        .map((a) => `${a?.name} X ${a?.amount}`)
         .join(" ")
     );
   };
@@ -60,9 +60,8 @@ const App = () => {
       <main>
         <div className="top-actions">
           <Select className="select-action" handleSelected={handleSelected} />
-          <Search handleKeyword={handleKeyword} />
+          <Search handleKeyword={handleKeyword} keyword={keyword} />
         </div>
-        <br></br>
         <Products
           keyword={keyword}
           products={products}
@@ -70,10 +69,12 @@ const App = () => {
           buyItem={buyItem}
         ></Products>
         <div className="bottom-section">
+          <hr></hr>
           <List products={products} deleteItem={deleteItem} />
           <hr id="divider"></hr>
           <Actions
             handleReset={handleReset}
+            keyword={keyword}
             handleDone={handleDone}
             getPurchasedProductsAmount={getPurchasedProductsAmount}
           />
