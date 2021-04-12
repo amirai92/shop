@@ -1,6 +1,4 @@
 import React from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
-import "./styles.css";
 
 const Products = (props) => {
   const { products, selectedCategory, keyword, buyItem } = props;
@@ -14,45 +12,27 @@ const Products = (props) => {
   let notFound = `${keyword} Cannot be found, please try agian.`;
 
   return (
-    <Container>
-      <Row className="mt-n2">
-        {getFilteredProducts().length === 0 || undefined ? (
-          <b>{notFound}</b>
-        ) : (
-          getFilteredProducts().map((product) => (
-            <Col
-              key={product._id}
-              style={{ marginBottom: "30px" }}
-              sm={{ cols: 3 }}
-            >
-              <Card style={{ width: "15rem" }}>
-                <Card.Img
-                  style={{ objectFit: "cover" }}
-                  height={200}
-                  variant="top"
+    <div className="container mx-auto p-3 text-center">
+      {getFilteredProducts().length === 0 || undefined ? (
+        <b className="text-center mb-4 mt-4">{notFound}</b>
+      ) : (
+        <ul className="grid grid-cols-4 gap-6 mb-4 mt-6">
+          {getFilteredProducts().map((product) => (
+            <li key={product._id} className="border flex">
+              <button>
+                <img
                   src={product?.image}
                   alt={product?.description}
+                  onClick={() => {
+                    buyItem(product?._id);
+                  }}
                 />
-                <Card.Body>
-                  <Card.Title>{product?.name}</Card.Title>
-                  <Card.Text>{product?.description}</Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <Button
-                    onClick={() => {
-                      buyItem(product?._id);
-                    }}
-                    variant="outline-primary"
-                  >
-                    Add To Cart
-                  </Button>
-                </Card.Footer>
-              </Card>
-            </Col>
-          ))
-        )}
-      </Row>
-    </Container>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

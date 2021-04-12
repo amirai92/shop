@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import "./App.css";
-import data from "./utills/data.json";
-import Products from "./components/Products";
+import data from "./utills/data";
 import Select from "./components/Select";
 import Search from "./components/Search";
-import List from "./components/List";
 import Actions from "./components/Actions";
-import { Card } from "react-bootstrap";
-import "./components/styles.css";
+import List from "./components/List";
+import Products from "./components/Products";
 
 const App = () => {
   const [products, setProducts] = useState(JSON.parse(JSON.stringify(data)));
@@ -55,23 +52,21 @@ const App = () => {
     products.reduce((a, b) => a + (b["amount"] || 0), 0);
 
   return (
-    <Card style={{ position: "relative" }}>
-      <Card.Header as="h1">Shopping List </Card.Header>
-      <main>
-        <div className="top-actions">
-          <Select className="select-action" handleSelected={handleSelected} />
-          <Search handleKeyword={handleKeyword} keyword={keyword} />
-        </div>
+    <>
+      <div className="container mx-auto border rounded w-1/4 h-full	mt-2">
+        <p className="text-2xl py-4 px-6 bg-gray-100 h-16 ">Shopping list</p>
+        <Select handleSelected={handleSelected} value={selectedCategory} />
+        <Search handleKeyword={handleKeyword} keyword={keyword} />
         <Products
           keyword={keyword}
           products={products}
           selectedCategory={selectedCategory}
           buyItem={buyItem}
         ></Products>
-        <div className="bottom-section">
+        <div className="bg-gray-100 ">
           <hr></hr>
           <List products={products} deleteItem={deleteItem} />
-          <hr id="divider"></hr>
+          <hr className="flex flex-wrap content-center w-5/6 ml-10 mt-4"></hr>
           <Actions
             handleReset={handleReset}
             keyword={keyword}
@@ -79,8 +74,8 @@ const App = () => {
             getPurchasedProductsAmount={getPurchasedProductsAmount}
           />
         </div>
-      </main>
-    </Card>
+      </div>
+    </>
   );
 };
 
